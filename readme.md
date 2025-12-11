@@ -3,14 +3,12 @@
 <!-- [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/CubicsYang/Vision2Slope) -->
 
 <div align="center">
-    <a href="https://github.com/CubicsYang/Vision2Slope" title="Vision2Slope — Street-view-based urban slope estimation framework">
+    <a href="" title="Vision2Slope — Street-view-based urban slope estimation framework">
         <img src="images/logo.png" alt="Vision2Slope — Street-view-based urban slope estimation framework" style="max-width:480px; height:auto;">
     </a>
 </div>
 
 # Vision2Slope
-
-**Primary Author:** [Yang CHEN](https://cubicsyang.github.io/) (Nanjing Normal University)
 
 An integrated pipeline for two-level road slope analysis from single panoramic street view images
 
@@ -32,9 +30,12 @@ An integrated pipeline for two-level road slope analysis from single panoramic s
 
 The pipeline generates detailed slope analysis results, including visualizations of slope distributions and numerical slope values for both point-level and segment-level analyses.
 
-[![Vision2Slope — Street-view-based urban slope estimation framework](images/SF-map.png)](https://github.com/CubicsYang/Vision2Slope "Vision2Slope — Street-view-based urban slope estimation framework")
+![Vision2Slope — Street-view-based urban slope estimation framework](images/SF-map.png)
 
 *Figure: Two-level road slope maps using Vision2Slope.*
+
+## Usage
+Please refer to the [Tutorial](docs/Vision2Slope_Tutorial.ipynb) for detailed instructions on how to use Vision2Slope for slope estimation from street view images.
 
 ## TODO list
 
