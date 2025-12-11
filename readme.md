@@ -26,6 +26,10 @@ An integrated pipeline for two-level road slope analysis from single panoramic s
 
 - **Segment-level Slope Estimation**: Analyzes the slope over larger road segments to provide a comprehensive understanding of road gradients and relief.
 
+
+## Usage
+Please refer to the [Tutorial](examples/Vision2Slope_Tutorial.ipynb) or [Script](examples/example.py) for detailed instructions on how to use Vision2Slope for slope estimation from street view images.
+
 ## Results
 
 The pipeline generates detailed slope analysis results, including visualizations of slope distributions and numerical slope values for both point-level and segment-level analyses.
@@ -33,9 +37,6 @@ The pipeline generates detailed slope analysis results, including visualizations
 ![Vision2Slope — Street-view-based urban slope estimation framework](images/SF-map.png)
 
 *Figure: Two-level road slope maps using Vision2Slope.*
-
-## Usage
-Please refer to the [Tutorial](docs/Vision2Slope_Tutorial.ipynb) for detailed instructions on how to use Vision2Slope for slope estimation from street view images.
 
 ## TODO list
 
