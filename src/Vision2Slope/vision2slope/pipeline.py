@@ -209,7 +209,7 @@ class Vision2SlopePipeline:
 
         # Convert results to DataFrame and save
         df = self._results_to_dataframe(results)
-        print(df.head())
+
         csv_path = self._save_results(df)
         
         # Post-process for bi-directional slope estimation
