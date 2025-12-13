@@ -1,1 +1,5 @@
 .DS_Store
+uncertainty_analysis/panoramas
+uncertainty_analysis/subsamples_result.gpkg
+uncertainty_analysis/roll
+uncertainty_analysis/pano

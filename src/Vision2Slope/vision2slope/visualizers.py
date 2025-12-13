@@ -306,7 +306,7 @@ class Visualizer(VisualizationProvider):
             # Road mask overlay
             axes[2].imshow(corrected_image)
             axes[2].imshow(road_mask, cmap='gray', alpha=0.5)
-            axes[2].set_title(f"Road Mask\nArea: {result.road_area} pixels\nRoad Angle: {result.road_angle:.2f}°")
+            axes[2].set_title(f"Road Mask\nArea: {result.road_area} pixels\nRoad Slope: {result.road_edge_line_angle:.2f}°")
             axes[2].axis('off')
             
             plt.tight_layout()

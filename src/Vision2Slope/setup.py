@@ -13,9 +13,6 @@ setup(
     author="Cubics Yang",
     author_email="yangchen@nnu.edu.cn",
     description="Integrated pipeline for road slope analysis from street view images",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/CubicsYang/Vision2Slope",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",

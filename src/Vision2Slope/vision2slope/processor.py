@@ -137,10 +137,9 @@ class StandardImageProcessor(ImageProcessor):
             self.logger.debug(f"Processing {filename}: Road slope analysis")
             slope, intercept, angle, road_area, road_mask, edge_points = \
                 self.slope_analyzer.analyze_with_details(corrected_semantic_map)
-            
-            result.road_slope = slope
-            result.road_intercept = intercept
-            result.road_angle = angle
+            result.road_edge_line_slope = slope
+            result.road_edge_line_intercept = intercept
+            result.road_edge_line_angle = angle
             result.road_area = road_area
             result.stage_completed = ProcessingStage.SLOPE_ESTIMATION
             

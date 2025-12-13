@@ -24,9 +24,14 @@ def create_argument_parser() -> argparse.ArgumentParser:
     )
     
     # Required arguments
-    parser.add_argument("--input_dir", required=True,
+    # parser.add_argument("--input_dir", default="/Users/cubics/Vision2Slope/uncertainty_analysis/roll/roll-panos/chunk_-5_rolled/perspective",
+    #                    help="Input directory containing images")
+    # parser.add_argument("--output_dir", default="/Users/cubics/Vision2Slope/uncertainty_analysis/roll/roll-test",
+    #                    help="Output directory for results")
+    
+    parser.add_argument("--input_dir", required=True, 
                        help="Input directory containing images")
-    parser.add_argument("--output_dir", required=True,
+    parser.add_argument("--output_dir", required=True, 
                        help="Output directory for results")
     
     # Model configuration
@@ -100,7 +105,7 @@ def main():
     """Main function for command-line interface."""
     parser = create_argument_parser()
     args = parser.parse_args()
-    
+
     try:
         # Create configuration from arguments
         config = PipelineConfig.from_args(args)

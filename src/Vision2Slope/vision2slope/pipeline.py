@@ -205,10 +205,11 @@ class Vision2SlopePipeline:
         results = []
         for image_file in tqdm(image_files, desc="Processing images"):
             result = self.processor.process(str(image_file))
-            results.append(result)
-        
+            results.append(result) 
+
         # Convert results to DataFrame and save
         df = self._results_to_dataframe(results)
+        print(df.head())
         csv_path = self._save_results(df)
         
         # Post-process for bi-directional slope estimation
