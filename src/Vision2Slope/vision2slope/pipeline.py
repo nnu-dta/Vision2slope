@@ -119,11 +119,41 @@ class Vision2SlopePipeline:
             self.logger.info("=" * 60)
             
             # Update config to process perspective views instead of originals
-            self.config.input_dir = str(perspective_dir)
+            # Note: zensvi.transform.ImageTransformer creates nested subdirectories
+            # Check for the actual location of generated files
+            actual_perspective_dir = self._find_actual_perspective_dir(perspective_dir)
+            self.config.input_dir = str(actual_perspective_dir)
+            self.logger.info(f"Updated input directory to: {self.config.input_dir}")
             
         except Exception as e:
             self.logger.error(f"Panorama preprocessing failed: {e}")
             raise ConfigurationError(f"Failed to process panoramic images: {e}")
+    
+    def _find_actual_perspective_dir(self, base_dir: Path) -> Path:
+        """
+        Find the actual directory containing perspective images.
+        
+        zensvi.transform.ImageTransformer creates nested subdirectories,
+        so we need to search for the actual location of generated files.
+        
+        Args:
+            base_dir: Base directory to search from
+            
+        Returns:
+            Path to directory containing perspective images
+        """
+        # Search for directories containing perspective images
+        for root, dirs, files in os.walk(base_dir):
+            # Check if this directory contains image files
+            image_files = [f for f in files if Path(f).suffix.lower() in self.config.processing_config.image_extensions]
+            if image_files:
+                found_dir = Path(root)
+                self.logger.debug(f"Found {len(image_files)} perspective images in: {found_dir}")
+                return found_dir
+        
+        # If no images found, return the original directory
+        self.logger.warning(f"No perspective images found in subdirectories, using: {base_dir}")
+        return base_dir
     
     def _create_processor(self) -> StandardImageProcessor:
         """

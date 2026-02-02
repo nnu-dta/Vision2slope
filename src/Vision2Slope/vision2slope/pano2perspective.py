@@ -6,6 +6,7 @@ import logging
 from pathlib import Path
 from typing import List, Optional
 from zensvi.transform import ImageTransformer
+import glob
 
 
 class PanoramaTransformer:
@@ -52,51 +53,13 @@ class PanoramaTransformer:
         
         generated_files = []
         
-        if generate_left_right:
-            # Generate left view (90°)
-            self.logger.info("Generating left view (Direction 90°)...")
-            left_transformer = ImageTransformer(
+        self.logger.warning("generate_left_right=False: transforming all images as-is")
+        transformer = ImageTransformer(
                 dir_input=input_dir,
                 dir_output=output_dir
             )
-            left_transformer.transform_images(
-                style_list="perspective",
-                FOV=self.fov,
-                theta=90,  # Left view
-                phi=self.phi,
-                aspects=self.aspects,
-                show_size=self.show_size
-            )
-            
-            # Generate right view (270°)
-            self.logger.info("Generating right view (Direction 270°)...")
-            right_transformer = ImageTransformer(
-                dir_input=input_dir,
-                dir_output=output_dir
-            )
-            right_transformer.transform_images(
-                style_list="perspective",
-                FOV=self.fov,
-                theta=270,  # Right view
-                phi=self.phi,
-                aspects=self.aspects,
-                show_size=self.show_size
-            )
-            
-            # Collect generated files
-            for file in output_path.iterdir():
-                if file.is_file() and ('Direction_90' in file.name or 'Direction_270' in file.name):
-                    generated_files.append(file)
-            
-            self.logger.info(f"Generated {len(generated_files)} perspective views")
-        else:
-            # Generate all standard directions if not specifically left/right
-            self.logger.warning("generate_left_right=False: transforming all images as-is")
-            transformer = ImageTransformer(
-                dir_input=input_dir,
-                dir_output=output_dir
-            )
-            transformer.transform_images(
+        print(output_dir)
+        transformer.transform_images(
                 style_list="perspective",
                 FOV=self.fov,
                 theta=90,  # Default view
@@ -105,10 +68,30 @@ class PanoramaTransformer:
                 show_size=self.show_size
             )
             
-            for file in output_path.iterdir():
+        for file in output_path.iterdir():
                 if file.is_file():
                     generated_files.append(file)
         
+        # Delete redundant perspective images with 'Direction_0' and 'Direction_180'
+        perspective_dir = Path(output_dir) / "perspective"
+        deleted_count = 0
+
+        # Search for Direction_0 and Direction_180 images
+        for direction in ['Direction_0', 'Direction_180']:
+            pattern = str(perspective_dir / "**" / f"*{direction}*.png")
+            matching_files = glob.glob(pattern, recursive=True)
+            
+            for file_path in matching_files:
+                try:
+                    Path(file_path).unlink()
+                    deleted_count += 1
+                except Exception as e:
+                    print(f"  Error deleting {file_path}: {e}")
+
+        if deleted_count > 0:
+            print(f"\n✓ Cleaned up {deleted_count} redundant perspective images")
+        else:
+            print("\nℹ No redundant images found to delete")
         return generated_files
     
     def is_panoramic_image(self, image_path: str) -> bool:
