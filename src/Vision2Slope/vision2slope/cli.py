@@ -5,14 +5,7 @@ Command-line interface for Vision2Slope pipeline.
 import argparse
 import sys
 
-from .config import (
-    PipelineConfig,
-    ModelConfig,
-    DetectionConfig,
-    AnalysisConfig,
-    VisualizationConfig,
-    ProcessingConfig
-)
+from .config import PipelineConfig
 from .pipeline import Vision2SlopePipeline
 
 
@@ -77,11 +70,6 @@ def create_argument_parser() -> argparse.ArgumentParser:
                        help="Save edge detection visualizations")
     parser.add_argument("--save-line-detection", action="store_true",
                        help="Save line detection visualizations")
-    parser.add_argument("--save-skew-visualization", action="store_true",
-                       help="Save skew detection visualizations")
-    parser.add_argument("--save-slope-visualization", action="store_true",
-                       help="Save slope estimation visualizations")
-    
     # Processing options
     parser.add_argument("--log-level", choices=["DEBUG", "INFO", "WARNING", "ERROR"],
                        default="INFO", help="Logging level")

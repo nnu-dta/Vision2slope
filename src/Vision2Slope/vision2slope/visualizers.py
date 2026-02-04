@@ -3,7 +3,6 @@ Visualization module for Vision2Slope pipeline.
 """
 
 import logging
-import os
 from pathlib import Path
 import matplotlib.pyplot as plt
 import cv2
@@ -54,10 +53,6 @@ class Visualizer(VisualizationProvider):
             self.edges_dir = self.output_dir / self.config.edges_dir_name
             self.edges_dir.mkdir(exist_ok=True, parents=True)
 
-        if self.config.save_ppht_results:
-            self.ppht_dir = self.output_dir / self.config.ppht_dir_name
-            self.ppht_dir.mkdir(exist_ok=True, parents=True)
-        
         if self.config.save_line_detection:
             self.lines_dir = self.output_dir / self.config.lines_dir_name
             self.lines_dir.mkdir(exist_ok=True, parents=True)
@@ -122,25 +117,6 @@ class Visualizer(VisualizationProvider):
         except Exception as e:
             self.logger.error(f"Failed to save edge detection: {e}")
 
-    def save_ppht_results(self, ppht_image: np.ndarray, filename: str):
-        """
-        Save Probabilistic Progressive Hough Transform (PPHT) results visualization.
-        
-        Args:
-            ppht_image: Image with PPHT lines drawn
-            filename: Original filename
-        """
-        if not self.config.save_ppht_results:
-            return
-
-        try:
-            # Save the ppht visualization image directly
-            output_path = self.ppht_dir / filename.replace('.png', '_ppht.png').replace('.jpg', '_ppht.jpg')
-            cv2.imwrite(str(output_path), ppht_image)
-            self.logger.debug(f"Saved PPHT results to: {output_path}")
-        except Exception as e:
-            self.logger.error(f"Failed to save PPHT results: {e}")
-    
     def save_line_detection(self, image: np.ndarray, lines: np.ndarray, filename: str, has_background: bool = True):
         """
         Save line detection visualization.

@@ -3,7 +3,6 @@ Skew detection module for Vision2Slope pipeline.
 """
 
 import logging
-import os
 from typing import List, Optional, Tuple
 import numpy as np
 import cv2
@@ -313,46 +312,3 @@ class SkewDetector(SkewDetectionProvider):
             self.logger.error(f"Skew detection failed: {e}")
             return 0.0, 0
     
-    def save_edge_detection_visualization(self, image: np.ndarray, filename: str, output_dir: str):
-        """
-        Save edge detection visualization.
-        
-        Args:
-            image: Input image in BGR format
-            filename: Original filename
-            output_dir: Output directory
-        """
-        try:
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            blurred = cv2.GaussianBlur(gray, (3, 3), 0)
-            edges = cv2.Canny(blurred, self.config.canny_threshold1, self.config.canny_threshold2)
-            
-            output_path = os.path.join(output_dir, filename.replace('.png', '_edges.png').replace('.jpg', '_edges.jpg'))
-            cv2.imwrite(output_path, edges)
-            
-        except Exception as e:
-            self.logger.error(f"Failed to save edge detection visualization: {e}")
-    
-    def save_line_detection_visualization(self, image: np.ndarray, lines: np.ndarray, 
-                                         filename: str, output_dir: str):
-        """
-        Save line detection visualization.
-        
-        Args:
-            image: Input image in BGR format
-            lines: Detected lines
-            filename: Original filename
-            output_dir: Output directory
-        """
-        try:
-            vis_image = image.copy()
-            if lines is not None and lines.size > 0:
-                for line in lines:
-                    x1, y1, x2, y2 = line[0]
-                    cv2.line(vis_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            
-            output_path = os.path.join(output_dir, filename.replace('.png', '_lines.png').replace('.jpg', '_lines.jpg'))
-            cv2.imwrite(output_path, vis_image)
-            
-        except Exception as e:
-            self.logger.error(f"Failed to save line detection visualization: {e}")

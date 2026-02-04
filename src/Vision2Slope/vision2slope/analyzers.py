@@ -3,7 +3,6 @@ Road slope analysis module for Vision2Slope pipeline.
 """
 
 import logging
-import os
 from typing import Optional, Tuple
 import numpy as np
 import cv2
@@ -207,18 +206,3 @@ class RoadSlopeAnalyzer(SlopeAnalysisProvider):
             self.logger.error(f"Road slope analysis failed: {e}")
             return -999.0, -999.0, -999.0, 0, None, None
     
-    def save_road_mask_visualization(self, road_mask: np.ndarray, filename: str, output_dir: str):
-        """
-        Save road mask visualization.
-        
-        Args:
-            road_mask: Binary road mask
-            filename: Original filename
-            output_dir: Output directory
-        """
-        try:
-            output_path = os.path.join(output_dir, filename.replace('.png', '_road_mask.png').replace('.jpg', '_road_mask.jpg'))
-            cv2.imwrite(output_path, road_mask * 255)
-            
-        except Exception as e:
-            self.logger.error(f"Failed to save road mask visualization: {e}")

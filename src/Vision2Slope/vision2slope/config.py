@@ -111,9 +111,6 @@ class VisualizationConfig:
     save_road_masks: bool = False
     save_edge_detection: bool = False
     save_line_detection: bool = False
-    save_skew_visualization: bool = False
-    save_slope_visualization: bool = True
-    save_ppht_results: bool = False
     save_road_edge_fitting: bool = False
     
     # Visualization parameters
@@ -128,7 +125,6 @@ class VisualizationConfig:
     masks_dir_name: str = "masks"
     edges_dir_name: str = "edge_detection"
     lines_dir_name: str = "line_detection"
-    ppht_dir_name: str = "ppht_results"
     road_edge_fitting_dir_name: str = "road_edge_fitting"
     
     def validate(self):
@@ -267,9 +263,6 @@ class PipelineConfig:
             save_road_masks=args.save_road_masks,
             save_edge_detection=args.save_edge_detection,
             save_line_detection=args.save_line_detection,
-            save_skew_visualization=args.save_skew_visualization,
-            save_slope_visualization=args.save_slope_visualization,
-            save_ppht_results=getattr(args, 'save_ppht_results', True),
             save_road_edge_fitting=getattr(args, 'save_road_edge_fitting', True)
         )
         
